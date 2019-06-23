@@ -1,14 +1,11 @@
-# Archive-Tar-Stream
-Archive::Tar::Stream - pure perl IO-friendly tar file management
-
-# DESCRIPTION
+Archive-Tar-Stream
 
 This module was previously known as ME::TarStream and created
 as part of the backup system at FastMail.FM a few years ago.
 The first commit was Tue Feb 20 03:21:43 2007 +0000
 
 
-# RATIONALE
+RATIONALE
 
 Why this instead of just using gnu tar, or any of the other
 Archive:: packages?  In a word, IO.  Actually that's two
@@ -27,7 +24,7 @@ a pipe like this:
 zcat old.tar.gz | ./decider | gzip > new.tar.gz
 
 
-# INSTALLATION
+INSTALLATION
 
 To install this module, run the following commands:
 
@@ -36,16 +33,14 @@ To install this module, run the following commands:
 	make test
 	make install
 
-# SUPPORT AND DOCUMENTATION
+SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the
 perldoc command.
 
     perldoc Archive::Tar::Stream
 
-You can also look for information at:-
-
-    https://github.com/gitcnd/Archive-Tar-Stream
+You can also look for information at:
 
     RT, CPAN's request tracker (report bugs here)
         http://rt.cpan.org/NoAuth/Bugs.html?Dist=Archive-Tar-Stream
@@ -64,10 +59,9 @@ Upstream source code is on GitHub:
         http://github.com/brong/Archive-Tar/Stream/
 
 
-# LICENSE AND COPYRIGHT
+LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2014 Bron Gondwana
-Copyright (C) 2019 Chris Drake
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

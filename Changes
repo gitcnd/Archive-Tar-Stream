@@ -1,0 +1,11 @@
+Revision history for Archive-Tar-Stream
+
+0.01    Thu Oct  6 20:01:32 CEST 2011
+        - Packaged up initial ME::TarStream code from FastMail
+        - Added basic tests and documentation
+
+0.02    Sat Jan  4 14:59:10 EST 2014
+        - [rt.cpan.org #91796] added missing typeflag to AddLink
+
+0.03    Sun Jun  23 19:40:10 AEST 2019
+        - (Chris Drake) Add option to prevent unwanted internal die() results
