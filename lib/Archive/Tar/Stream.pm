@@ -14,6 +14,7 @@ use File::Temp;
 
 # XXX - make this an OO attribute
 our $VERBOSE = 0;
+our $NODIE = 0;
 
 =head1 NAME
 
@@ -104,8 +105,14 @@ sub new {
   my $class = shift;
   my %args = @_;
 
-  die "Useless to stream without a filehandle"
-    unless ($args{infh} or $args{outfh});
+  unless ($args{infh} or $args{outfh}) {
+    if($NODIE) {
+      warn "Useless to stream without a filehandle";
+      return undef;
+    } else {
+      die "Useless to stream without a filehandle";
+    }
+  }
 
   my $Self = bless {
     # defaults
@@ -131,6 +138,7 @@ sub NoDie {
   my $Self = shift;
   if (@_) {
     $Self->{no_die} = shift;
+    $NODIE=$Self->{no_die};
   }
   return $Self->{no_die};
 }
@@ -337,7 +345,12 @@ sub StreamCopy {
       }
 
       else {
-        die "Bogus response $rc from callback\n";
+	if($NODIE) {
+          warn "Bogus response $rc from callback\n";
+	  return undef;
+        } else {
+          die "Bogus response $rc from callback\n";
+        }
       }
     }
     else {
@@ -377,7 +390,12 @@ sub ReadBlocks {
   my $Self = shift;
   my $nblocks = shift || 1;
   unless ($Self->{infh}) {
-    die "Attempt to read without input filehandle";
+    if($NODIE) {
+      warn "Attempt to read without input filehandle";
+      return undef;
+    } else {
+      die "Attempt to read without input filehandle";
+    }
   }
   my $bytes = BLOCKSIZE * $nblocks;
   my $buf;
@@ -387,7 +405,12 @@ sub ReadBlocks {
     unless ($n) {
       delete $Self->{infh};
       return if ($bytes == BLOCKSIZE * $nblocks); # nothing at EOF
-      die "Failed to read full block at $Self->{inpos}";
+      if($NODIE) {
+	warn "Failed to read full block at $Self->{inpos}";
+	return undef;
+      } else {
+	die "Failed to read full block at $Self->{inpos}";
+      }
     }
     $bytes -= $n;
     $Self->{inpos} += $n;
@@ -420,7 +443,12 @@ sub WriteBlocks {
   my $bytes = BLOCKSIZE * $nblocks;
 
   unless ($Self->{outfh}) {
-    die "Attempt to write without output filehandle";
+    if($NODIE) {
+      warn "Attempt to write without output filehandle";
+      return undef;
+    } else {
+      die "Attempt to write without output filehandle";
+    }
   }
   my $pos = $Self->{outpos};
 
@@ -436,7 +464,12 @@ sub WriteBlocks {
     my $n = syswrite($Self->{outfh}, $string, $bytes, (BLOCKSIZE * $nblocks) - $bytes);
     unless ($n) {
       delete $Self->{outfh};
-      die "Failed to write full block at $Self->{outpos}";
+      if($NODIE) {
+	warn "Failed to write full block at $Self->{outpos}";
+	return undef;
+      } else {
+	die "Failed to write full block at $Self->{outpos}";
+      }
     }
     $bytes -= $n;
     $Self->{outpos} += $n;
@@ -773,7 +806,12 @@ sub CopyFromFh {
     while ($thistime) {
       my $n = sysread($Fh, $buf, $thistime);
       unless ($n) {
-        die "Failed to read entire file, doh ($bytes remaining)!\n";
+        if($NODIE) {
+	  warn "Failed to read entire file, doh ($bytes remaining)!\n";
+	  return undef;
+	} else {
+	  die "Failed to read entire file, doh ($bytes remaining)!\n";
+	}
       }
       $thistime -= $n;
       $block .= $buf;
