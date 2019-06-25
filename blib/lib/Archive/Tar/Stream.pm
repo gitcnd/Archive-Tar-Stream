@@ -22,7 +22,7 @@ Archive::Tar::Stream - pure perl IO-friendly tar file management
 
 =head1 VERSION
 
-Version 0.03
+Version 0.02
 
 =cut
 

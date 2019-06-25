@@ -9,3 +9,4 @@ Revision history for Archive-Tar-Stream
 
 0.03    Sun Jun  23 19:40:10 AEST 2019
         - (Chris Drake) Add option to prevent unwanted internal die() results
+	- added example catx.pl - a sample program which recursively lists all files on your machine (including those inside tar and zip)

@@ -1,8 +1,12 @@
-Archive-Tar-Stream
+Archive-Tar-Stream 0.03
 
 This module was previously known as ME::TarStream and created
 as part of the backup system at FastMail.FM a few years ago.
 The first commit was Tue Feb 20 03:21:43 2007 +0000
+
+This is Archive-Tar-Stream 0.02 with a NODIE feature added. Use it thusly:-
+
+use Archive::Tar::Stream 0.03; $Archive::Tar::Stream::NODIE=1; # prevents calls from doing an unwanted die() on you
 
 
 RATIONALE
