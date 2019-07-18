@@ -26,7 +26,7 @@ Version 0.03
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.05';
 
 
 =head1 SYNOPSIS
@@ -402,7 +402,8 @@ sub ReadBlocks {
   my @result;
   while ($bytes > 0) {
     my $n = sysread($Self->{infh}, $buf, $bytes);
-    unless ($n) {
+
+    if ($n<1) {	# sysread returns -1 on errors
       delete $Self->{infh};
       return if ($bytes == BLOCKSIZE * $nblocks); # nothing at EOF
       if($NODIE) {
@@ -576,7 +577,7 @@ sub ParseHeader {
     s/\0.*//; # strip from first null
   }
 
-  my $chksum = oct($items[6]);
+  my $chksum = eval('oct($items[6])'); # stop a die() if non-octal turns up
   # do checksum
   substr($block, 148, 8) = "        ";
   unless (unpack("%16C*", $block) == $chksum) {
